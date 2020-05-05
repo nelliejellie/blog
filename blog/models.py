@@ -12,7 +12,7 @@ class PublishedManager(models.Manager):
         
 class Post(models.Model):
     objects = models.Manager() # the default manager
-    PublishedManager = PublishedManager() # our custom manager
+    published = PublishedManager() # our custom manager
     status_choices = (
         ('draft', 'Draft'),
         ('published', 'Published')
@@ -24,7 +24,7 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=status_choices,default='published')
+    status = models.CharField(max_length=10, choices=status_choices,default='draft')
     tags = TaggableManager()
 
     def get_absolute_url(self):

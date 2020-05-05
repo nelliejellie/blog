@@ -126,12 +126,11 @@ STATICFILES_DIRS = [
     ]
 
 #email config
-import socket
-socket.getaddrinfo('localhost', 8000)
+
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER ='moviegist1@gmail.com'
 EMAIL_HOST_PASS = 'vxuk sffm wzww geoo'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 

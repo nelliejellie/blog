@@ -19,7 +19,7 @@ class PostListView(ListView):
 
 #function based views    
 def post_list(request,  tag_slug=None):
-    object_list = Post.objects.all() #you can also use 'Post.published.all' since yiu created a manager for it
+    object_list = Post.published.all() #you can also use 'Post.objects.all' since yiu created a manager for it
     tag = None
     
     if tag_slug:

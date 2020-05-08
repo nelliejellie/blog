@@ -29,8 +29,11 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+SITE_ID = 1
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'taggit',
     'blog.apps.BlogConfig',
     'django.contrib.admin',
@@ -77,8 +80,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mysite',
+        'USER':'postgres',
+        'PASSWORD':'Chidubem1992',
+        'HOST':'localhost'
     }
 }
 

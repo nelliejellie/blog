@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from .models import Post, Comment
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+
 
 
 # Create your views here.
@@ -95,10 +97,37 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(post.get_absolute_url())
             subject = f"{cd['name']} recommends you read" f'{post.title}'
             message = f'read {post.title} at {post_url} \n' f"{cd['name']} comments: {cd['comments']}"
-            send_mail(subject, message, 'jerrynelson78@yahoo.com', [cd['to']])
+            send_mail(subject, message, 'moviegist1@gmail.com', [cd['to']])
             sent = True
     else:
         form = EmailPostForm()
    
     return render(request, 'templates/blog/post/share.html', {'post':post, 'form':form, 'sent':sent,})
 
+#creating a search view
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            #searches for query in the title and bosy of the post using searchvector
+            search_vector = SearchVector('title', 'body')
+            search_query = SearchQuery(query)
+            results =Post.published.annotate(search=search_vector,rank=SearchRank(search_vector, search_query)).filter(search=search_query).order_by('-rank')
+    context = {
+        'form': form,
+        'query': query,
+        'results': results,
+    }
+    return render (request, 'blog/post/search.html', context)
+
+#weighting search queries
+#search_vector = SearchVector('title', weight='A') + \
+#SearchVector('body', weight='B')
+#search_query = SearchQuery(query)
+#results = Post.published.annotate(
+#rank=SearchRank(search_vector, search_query)
+#).filter(rank__gte=0.3).order_by('-rank')

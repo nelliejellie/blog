@@ -1,12 +1,14 @@
 body { 
     margin:0;
     padding:0;
-    font-family:helvetica, sans-serif; 
+    font-family:Geneva; 
 }
 
 a { 
-    color:#00abff;
+    color:purple;
     text-decoration:none; 
+    border-radius: 4px;
+    padding: 5px;
 }
 
 h1 { 
@@ -89,4 +91,14 @@ input[type=submit] {
     font-weight:bold;
     font-size:12px;
     color:#666;
+}
+
+/* images */
+img{
+    height: 50px;
+    width: 50px;
+    border-radius:50% ;
+    position: absolute;
+    top: 15px;
+    left: 230px;
 }

@@ -8,7 +8,12 @@ class EmailPostForm(forms.Form):
     to = forms.EmailField()
     comments = forms.CharField(required=False, widget=forms.Textarea)
 
+#creating a comment form from the modelform
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('name','email','body')
+
+#creating a search form 
+class SearchForm(forms.Form):
+    query = forms.CharField()

@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
+{% load static %}
 
-{% block title %}Jerry's Blog{% endblock %} <!-- the title of myblog-->
+{% block title %}Shaolyn's Blog{% endblock %} <!-- the title of myblog-->
 
 {% block content %}
     
-    <h1>Jerry's Blog </h1>
+    <h1>Shaolyn's Blog <span><img src="{% static 'img/shaolyn.jpg' %}"></span></h1>
     {% if tag %}
         <h2>Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
@@ -20,13 +22,13 @@
     <p class="tags">
         Tags :
         {% for tag in post.tags.all %}
-            <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+            <a href="{% url 'blog:post_list_by_tag' tag.slug %}" style="border:1px solid;">
                 {{ tag.name }}
             </a> 
             {% if not forloop.last %}, {% endif %}
         {% endfor %}
     </p>
-    {{ post.body | truncatewords:30 | linebreaks }}
+    {{ post.body | markdown |truncatewords_html:30 }}
 
     {% endfor %}
     {% include 'paginator.html' with page=posts %}

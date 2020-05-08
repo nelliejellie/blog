@@ -13,7 +13,7 @@
             {% endblock %} 
         </div>
         <div id="sidebar">
-            <h2> Jerry's blog</h2>
+            <h2> Shaolyn's blog</h2>
             <p>This is my blog. i've published {% total_posts %} posts so far</p>
             
             <h3>latest posts</h3>
@@ -26,7 +26,9 @@
                     <a href="{{ posts.get_absolute_url }}"> {{ posts.title }}</a>
                 </li>
             {% endfor%}
+            <p>  <a href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed</a> </p>
             </ul>
+            <p><a href="{% url 'blog:post_search' %}">Search</a></p>
         </div>
 
     </body>
